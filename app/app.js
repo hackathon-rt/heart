@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -7,6 +5,23 @@ var fs = require("fs");
 var passport = require('passport');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
+ 
+passport.use('local', new AuthLocalStrategy(
+    function (username, password, done) {
+ 
+        if (username == "admin" && password == "admin") {
+            return done(null, {
+                username: "admin",
+                photoUrl: "url_to_avatar",
+                profileUrl: "url_to_profile"
+            });
+        }
+ 
+        return done(null, false, { 
+            message: 'Неверный логин или пароль' 
+        });
+    }
+)); 
  
 passport.use(new VKontakteStrategy({
     clientID:     '6760449', 
@@ -19,11 +34,11 @@ passport.use(new VKontakteStrategy({
     console.log(profile); 
 	console.log('__________'); 
     console.log(done); 
-        return done(null, {
-            username: profile.displayName,
-            photoUrl: profile.photos[0].value,
-            profileUrl: profile.profileUrl
-        });	
+    return done(null, {
+        username: profile.displayName,
+        photoUrl: profile.photos[0].value,
+        profileUrl: profile.profileUrl
+    });	
   }
 ));
 
@@ -44,6 +59,26 @@ app.get('/',function(req,res){
     res.render('views/index.html');
 });
 
+app.get('/auth', function (req, res) {
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+        return;
+    }
+
+    res.render('/views/login.html');
+});
+
+app.get('/sign-out', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+app.post('/auth', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/auth',
+    failureFlash: true })
+);
+
 app.get('/success',function(req,res){
 	console.log('success'); 
     res.end('success');
@@ -52,8 +87,7 @@ app.get('/success',function(req,res){
 
 app.get('/fail',function(req,res){
 	console.log('fail');
-    res.end('fail');
-    
+    res.end('fail');    
 });
 
 app.get('/auth/vkontakte',
@@ -75,7 +109,6 @@ app.get('/auth/vkontakte/callback',
 passport.serializeUser(function (user, done) {
     done(null, JSON.stringify(user));
 });
- 
  
 passport.deserializeUser(function (data, done) {
     try {
