@@ -19,6 +19,11 @@ passport.use(new VKontakteStrategy({
     console.log(profile); 
 	console.log('__________'); 
     console.log(done); 
+        return done(null, {
+            username: profile.displayName,
+            photoUrl: profile.photos[0].value,
+            profileUrl: profile.profileUrl
+        });	
   }
 ));
 
@@ -63,3 +68,16 @@ app.get('/auth/vkontakte/callback',
 	console.log('/success');
     res.redirect('/success');
   });
+  
+passport.serializeUser(function (user, done) {
+    done(null, JSON.stringify(user));
+});
+ 
+ 
+passport.deserializeUser(function (data, done) {
+    try {
+        done(null, JSON.parse(data));
+    } catch (e) {
+        done(err)
+    }
+});  
