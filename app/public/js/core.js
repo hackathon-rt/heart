@@ -55,6 +55,12 @@ function getpartners(){
 	});	
 };
 
+function getcontacts(){
+	$.get('/getdata', {act:'getcontacts'}, function(data) {
+		$('#content').html(data);
+	});	
+};
+
 function gettasks(){
 	$.get('/getdata', {act:'gettasks'}, function(data) {
 		$('#content').html(data);
