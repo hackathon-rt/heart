@@ -23,17 +23,17 @@ app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
 
-   		dbConnect.queryDB(`
+/*    		dbConnect.queryDB(`
 			SELECT 
-			us.*, co.* 
+			us.*, pa.* 
 			FROM 
 			users us 
-			JOIN contacts co 
-			ON us.users_id=co.contacts_id
+			JOIN partners pa
+			ON us.users_id=pa.users_id
 			`)
 			.then(result => {
 				console.log(result.rows);
-			})   
+			})   */ 
 
 			
 		//SELECT users.username FROM users INNER JOIN contacts ON users.users_id=contacts.contacts_id	
@@ -60,10 +60,14 @@ app.get('/',function(req,res){
     res.render('views/index.html');
 });
 
-app.get('/gettasks',function(req,res){
-	if(req.session.login){
-		
-	}
+app.get('/logout',function(req,res){
+	req.session.destroy(function(err) {
+	  if(err) {
+		console.log(err);
+	  } else {
+		res.redirect('/');
+	  }
+	});
 });
 
 app.get('/auth', function (req, res) {
@@ -104,6 +108,15 @@ app.post('/uploadphoto', (req, res) => {
 });
 
 app.get('/getdata',function(req,res){
+	if(req.query.act==='getlogin'){
+		var ans;
+		if(req.session.login){
+			ans={ans:true,username:req.session.login}
+		}else{
+			ans={ans:false}
+		};
+		res.end(JSON.stringify(ans));
+	};		
 	if(req.query.act==='getcontacts'){
 		dbConnect.queryDB(`select * from contacts`)
 			.then(result => {
@@ -117,7 +130,14 @@ app.get('/getdata',function(req,res){
 		})				
 	};	
 	if(req.query.act==='getfullusers'){
-		dbConnect.queryDB(`select co.*, us.* from users us join contacts co on us.users_id=co.contacts_id`)
+		dbConnect.queryDB(`			
+			SELECT 
+			us.*, pa.*
+			FROM 
+			users us 
+			JOIN partners pa
+			ON us.users_id=pa.users_id
+			`)
 			.then(result => {
 				res.end(JSON.stringify(result.rows));
 		})				
@@ -188,7 +208,7 @@ app.get('/auth/vkontakte/callback',
   function(req, res) {
 	SesObj = req.session;
 	SesObj.login=req.user.username;
-    res.end('/success');
+    res.redirect('/');
   });
   
 passport.serializeUser(function (user, done) {
