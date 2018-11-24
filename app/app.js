@@ -33,6 +33,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 });
