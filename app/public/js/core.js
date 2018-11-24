@@ -1,3 +1,13 @@
+$( document ).ready(function() {
+    $.get('/getdata', {act:'getlogin'}, function(data) {
+		data=JSON.parse(data);
+		if(data.ans){
+			$('#logon_forms').css('display','none');
+			$('#content').html('Добрый день, '+data.username);			
+		};
+	});	
+});
+
 function register_user(){
 	$.post("/register", {username:$('#r_username').val(), password: $('#r_password').val()},function(data){
 		data=JSON.parse(data);
