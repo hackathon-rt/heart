@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var fs = require("fs");
 var passport = require('passport');
+var session = require('express-session');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session()); 
- 
+app.use(session({secret: 'QdtVr56zP',resave: true,saveUninitialized: true})); 
 
 app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
@@ -48,6 +49,8 @@ passport.use(new VKontakteStrategy({
     console.log(profile); 
 	console.log('__________'); 
     console.log(done); 
+	SesObj = req.session;
+	SesObj.login='asd';
     return done(null, {
         username: profile.displayName,
         photoUrl: profile.photos[0].value,
@@ -57,6 +60,9 @@ passport.use(new VKontakteStrategy({
 ));
 
 app.get('/',function(req,res){
+	SesObj = req.session;
+	SesObj.login='asd';
+	if(SesObj.login)console.log(login);
     res.render('views/index.html');
 	console.log(req.user); 
 });
@@ -105,8 +111,9 @@ app.get('/auth/vkontakte',
 app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
-	console.log(req.user);
-    res.redirect('/success');
+			SesObj = req.session;
+			SesObj.login='asd';
+    res.end('/success');
   });
   
 passport.serializeUser(function (user, done) {
