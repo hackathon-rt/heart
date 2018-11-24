@@ -49,8 +49,6 @@ passport.use(new VKontakteStrategy({
     console.log(profile); 
 	console.log('__________'); 
     console.log(done); 
-	SesObj = req.session;
-	SesObj.login='asd';
     return done(null, {
         username: profile.displayName,
         photoUrl: profile.photos[0].value,
