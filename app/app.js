@@ -38,10 +38,12 @@ app.get('/',function(req,res){
 
 app.get('/success',function(req,res){
     res.end('success');
+	console.log('success'); 
 });
 
 app.get('/fail',function(req,res){
     res.end('fail');
+    console.log('fail');
 });
 
 app.get('/auth/vkontakte',
@@ -53,7 +55,7 @@ app.get('/auth/vkontakte',
 });
  
 app.get('/auth/vkontakte/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/fail' }),
+  passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/success');
