@@ -32,7 +32,7 @@ passport.use('local', new AuthLocalStrategy(
         }
  
         return done(null, false, { 
-            message: 'РќРµРІРµСЂРЅС‹Р№ Р»РѕРіРёРЅ РёР»Рё РїР°СЂРѕР»СЊ' 
+            message: 'Неверный логин или пароль' 
         });
     }
 )); 
@@ -58,6 +58,7 @@ passport.use(new VKontakteStrategy({
 
 app.get('/',function(req,res){
     res.render('views/index.html');
+	console.log(req.user); 
 });
 
 app.get('/auth', function (req, res) {
@@ -76,19 +77,18 @@ app.get('/sign-out', function (req, res) {
 app.post('/auth', 
   passport.authenticate('local', { failureRedirect: '/fail' }),
   function(req, res) {
-    res.end('success');
+    res.end('success '+req.user);
   });
 
 passport.authenticate('local', { failureRedirect: '/login' }),
 	app.post('/auth', 
 	function(req, res) {
+		
     res.redirect('/');
 });
 
 app.get('/success',function(req,res){
-	console.log('success'); 
-    res.end('success');
-	
+    res.end('success');	
 });
 
 app.get('/fail',function(req,res){
