@@ -23,17 +23,17 @@ app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
 
-   		dbConnect.queryDB(`
+/*    		dbConnect.queryDB(`
 			SELECT 
-			us.*, co.* 
+			us.*, pa.* 
 			FROM 
 			users us 
-			JOIN contacts co 
-			ON us.users_id=co.contacts_id
+			JOIN partners pa
+			ON us.users_id=pa.users_id
 			`)
 			.then(result => {
 				console.log(result.rows);
-			})   
+			})   */ 
 
 			
 		//SELECT users.username FROM users INNER JOIN contacts ON users.users_id=contacts.contacts_id	
@@ -130,7 +130,14 @@ app.get('/getdata',function(req,res){
 		})				
 	};	
 	if(req.query.act==='getfullusers'){
-		dbConnect.queryDB(`select co.*, us.* from users us join contacts co on us.users_id=co.contacts_id`)
+		dbConnect.queryDB(`			
+			SELECT 
+			us.*, pa.*
+			FROM 
+			users us 
+			JOIN partners pa
+			ON us.users_id=pa.users_id
+			`)
 			.then(result => {
 				res.end(JSON.stringify(result.rows));
 		})				
