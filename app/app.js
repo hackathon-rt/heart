@@ -201,7 +201,7 @@ app.get('/auth/vkontakte/callback',
   function(req, res) {
 	SesObj = req.session;
 	SesObj.login=req.user.username;
-    res.end('/');
+    res.redirect('/');
   });
   
 passport.serializeUser(function (user, done) {
