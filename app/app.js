@@ -23,10 +23,20 @@ app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
 
-/*   		dbConnect.queryDB(`select * from users LIMIT 100`)
+   		dbConnect.queryDB(`
+			SELECT 
+			us.*, co.* 
+			FROM 
+			users us 
+			JOIN contacts co 
+			ON us.users_id=co.contacts_id
+			`)
 			.then(result => {
-				console.log(result);
-			})   */  
+				console.log(result.rows);
+			})   
+
+			
+		//SELECT users.username FROM users INNER JOIN contacts ON users.users_id=contacts.contacts_id	
 			
 /* 		dbConnect.queryDB(`DELETE from users where username='14114796'`)
 			.then(result => {
@@ -106,6 +116,18 @@ app.get('/getdata',function(req,res){
 				res.end(JSON.stringify(result.rows));
 		})				
 	};	
+	if(req.query.act==='getfullusers'){
+		dbConnect.queryDB(`select co.*, us.* from users us join contacts co on us.users_id=co.contacts_id`)
+			.then(result => {
+				res.end(JSON.stringify(result.rows));
+		})				
+	};	
+	if(req.query.act==='getpartners'){
+		dbConnect.queryDB(`select * from partners`)
+			.then(result => {
+				res.end(JSON.stringify(result.rows));
+		})				
+	};		
 	if(req.query.act==='gettasks'){
 		dbConnect.queryDB(`select * from tasks`)
 			.then(result => {
@@ -130,13 +152,12 @@ app.post('/register',function(req,res){
 			dbConnect.queryDB(`SELECT * from users where username='`+req.body.username+`' LIMIT 1`)
 				.then(result => {
 					if(result.rows.length){
-						ans={ans:'error: login allready exist'};
+						ans={ans:false};
 						res.end(JSON.stringify(ans));					
 					}else{
 						dbConnect.queryDB(`INSERT INTO users (username,password) VALUES ('`+req.body.username+`','`+req.body.password+`')`)
 							.then(result => {						
-
-								ans={ans:'success: login inserted'};
+								ans={ans:true};
 								res.end(JSON.stringify(ans));
 							}) 						
 					};
@@ -156,7 +177,6 @@ app.get('/success',function(req,res){
 app.get('/fail',function(req,res){
     res.end('fail');    
 });
-
 
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
@@ -243,8 +263,9 @@ app.post('/auth',
   passport.authenticate('local', { failureRedirect: '/fail' }),
   function(req, res) {
 	SesObj = req.session;
-	SesObj.login=req.user.username;	  
-    res.end('success');
+	SesObj.login=req.user.username;	 
+	ans={ans:true,username:req.user.username}
+    res.end(JSON.stringify(ans));
 });
 
 passport.authenticate('local', { failureRedirect: '/login' }),
