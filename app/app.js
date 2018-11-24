@@ -11,7 +11,7 @@ const VKontakteStrategy = require('passport-vkontakte').Strategy;
 passport.use(new VKontakteStrategy({
     clientID:     '6760449', 
     clientSecret: 'JfGcUD3o1W8ckNqoaWT1',
-    callbackURL:  "http://localhost:8881/auth/vkontakte/callback"
+    callbackURL:  "http://mad.su:8881/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
     // console.log(params.email); // getting the email
