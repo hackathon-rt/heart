@@ -4,7 +4,22 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require("fs");
+var passport = require('passport');
 const port = 8881;
+const VKontakteStrategy = require('passport-vkontakte').Strategy;
+ 
+passport.use(new VKontakteStrategy({
+    clientID:     '6760449', 
+    clientSecret: '4Px7qwz3a',
+    callbackURL:  "http://localhost:8881/auth/vkontakte/callback"
+  },
+  function(accessToken, refreshToken, params, profile, done) {
+    // console.log(params.email); // getting the email
+    User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
+      return done(err, user);
+    });
+  }
+));
 
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
@@ -19,3 +34,17 @@ app.listen(port,'0.0.0.0',function(){
 app.get('/',function(req,res){
     res.render('views/index.html');
 });
+
+app.get('/auth/vkontakte',
+  passport.authenticate('vkontakte'),
+  function(req, res){
+    // The request will be redirected to vk.com for authentication, so
+    // this function will not be called.
+  });
+ 
+app.get('/auth/vkontakte/callback',
+  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
