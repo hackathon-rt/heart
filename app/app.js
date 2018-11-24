@@ -9,7 +9,7 @@ const AuthLocalStrategy = require('passport-local').Strategy;
  
 passport.use('local', new AuthLocalStrategy(
     function (username, password, done) {
- 
+		console.log(username, password)
         if (username == "admin" && password == "admin") {
             return done(null, {
                 username: "admin",
@@ -75,7 +75,7 @@ app.get('/sign-out', function (req, res) {
 });
 
 app.post('/auth', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/success',
     failureRedirect: '/fail',
     failureFlash: true })
 );
