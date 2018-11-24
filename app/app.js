@@ -1,12 +1,17 @@
-const http = require('http');
 
-const hostname = '127.0.0.1'; // listen on all ports
+
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+var fs = require("fs");
 const port = 8881;
 
-http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello World\n');
-}).listen(port, hostname, () => {
-  console.log('Server running at http://${hostname}:${port}/');
-});
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
 
+app.listen(port,'0.0.0.0',function(){
+	console.log('Server started');
+});
