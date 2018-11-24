@@ -37,19 +37,21 @@ app.get('/',function(req,res){
 });
 
 app.get('/success',function(req,res){
-    res.end('success');
 	console.log('success'); 
+    res.end('success');
+	
 });
 
 app.get('/fail',function(req,res){
+	console.log('fail');
     res.end('fail');
-    console.log('fail');
+    
 });
 
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
-	  onsole.log('auth');
+	  console.log('auth');
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
 });
@@ -58,5 +60,6 @@ app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
     // Successful authentication, redirect home.
+	console.log('/success');
     res.redirect('/success');
   });
