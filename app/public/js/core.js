@@ -54,3 +54,9 @@ function getpartners(){
 		$('#content').html(data);
 	});	
 };
+
+function gettasks(){
+	$.get('/getdata', {act:'gettasks'}, function(data) {
+		$('#content').html(data);
+	});	
+};
