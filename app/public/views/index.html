@@ -1,1 +1,25 @@
-11
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/core.js"></script>
+<div id="logon_forms">
+	<span id="a_status">
+	</span>
+	<div id="register">
+		<input type="text" id="r_username" placeholder="логин">
+		<input type="password" id="r_password" placeholder="пароль">
+		<input type="button" id="r_register" value="Зарегистрироваться" onclick="register_user();">
+	</div>
+	<div id="authenticate">
+		<input type="text" id="l_username" placeholder="логин">
+		<input type="password" id="l_password" placeholder="пароль">
+		<input type="button" id="l_login" value="Войти" onclick="auth_local();">
+		<input type="button" id="l_login" value="Войти через ВК" onclick="location.href='/auth/vkontakte'">
+	</div>
+</div>
+<input type="button" value="users" onclick="getusers();">
+<input type="button" value="fullusers" onclick="getfullusers();">
+<input type="button" value="fullusers" onclick="partners();">
+<div id="content">
+</div>
