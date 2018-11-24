@@ -5,6 +5,7 @@ var fs = require("fs");
 var passport = require('passport');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
+var AuthLocalStrategy = require('passport-local').Strategy;
  
 passport.use('local', new AuthLocalStrategy(
     function (username, password, done) {
