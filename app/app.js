@@ -40,6 +40,10 @@ app.get('/success',function(req,res){
     res.end('success');
 });
 
+app.get('/fail',function(req,res){
+    res.end('fail');
+});
+
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
@@ -49,7 +53,7 @@ app.get('/auth/vkontakte',
 });
  
 app.get('/auth/vkontakte/callback',
-  passport.authenticate('vkontakte', { failureRedirect: '/login' }),
+  passport.authenticate('vkontakte', { failureRedirect: '/fail' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/success');
