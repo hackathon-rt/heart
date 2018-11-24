@@ -1,0 +1,6 @@
+<script>
+	$.post("/auth", {username:'admin', password: 'admin'},function(data){
+		$('#auth').html(data);
+	});
+</script>
+<div id="res">auth</div>
