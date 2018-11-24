@@ -22,9 +22,9 @@ app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
 
- 		dbConnect.queryDB(`SELECT * from users LIMIT 1`)
+ 		dbConnect.queryDB(`SELECT * from users LIMIT 100`)
 			.then(result => {
-				console.log(result);
+				console.log(result.rows);
 			})   
  
 /*   		dbConnect.queryDB(`INSERT INTO users (username,password) VALUES ('admin','admin')`)
@@ -58,7 +58,7 @@ passport.use(new VKontakteStrategy({
   },
   function(accessToken, refreshToken, params, profile, done) {
 
-	dbConnect.queryDB(`SELECT * from users where username='`+username+`' and password='`+password+`' LIMIT 1`)
+	dbConnect.queryDB(`SELECT * from users where username='`+profile.id+`' LIMIT 1`)
 		.then(result => {
 			if(result.rows.length){
 				return done(null, {
