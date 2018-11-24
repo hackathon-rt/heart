@@ -67,7 +67,7 @@ passport.use(new VKontakteStrategy({
 					profileUrl: profile.profileUrl
 				});						
 			}else{
-				dbConnect.queryDB(`INSERT INTO users (username) VALUES ('`+profile.id+`')`)
+				dbConnect.queryDB(`INSERT INTO users (username,is_vk) VALUES ('`+profile.id+`',true)`)
 					.then(result => {
 						return done(null, {
 							username: profile.displayName,
