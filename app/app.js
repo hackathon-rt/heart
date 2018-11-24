@@ -7,6 +7,7 @@ var session = require('express-session');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
+
  
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
@@ -23,7 +24,6 @@ app.listen(port,'0.0.0.0',function(){
  
 passport.use('local', new AuthLocalStrategy(
     function (username, password, done) {
-		console.log(username, password)
         if (username == "admin" && password == "admin") {
             return done(null, {
                 username: "admin",
@@ -44,11 +44,11 @@ passport.use(new VKontakteStrategy({
     callbackURL:  "http://mad.su/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
-    console.log(params); 
+/*     console.log(params); 
     console.log('__________'); 
     console.log(profile); 
 	console.log('__________'); 
-    console.log(done); 
+    console.log(done);  */
     return done(null, {
         username: profile.displayName,
         photoUrl: profile.photos[0].value,
@@ -59,9 +59,7 @@ passport.use(new VKontakteStrategy({
 
 app.get('/',function(req,res){
 	SesObj = req.session;
-	if(SesObj.login)console.log(login);
     res.render('views/index.html');
-	console.log(req.user); 
 });
 
 app.get('/auth', function (req, res) {
@@ -80,7 +78,9 @@ app.get('/sign-out', function (req, res) {
 app.post('/auth', 
   passport.authenticate('local', { failureRedirect: '/fail' }),
   function(req, res) {
-    res.end('success '+req.user);
+	SesObj = req.session;
+	SesObj.login=req.user.username;	  
+    res.end('success');
   });
 
 passport.authenticate('local', { failureRedirect: '/login' }),
@@ -92,27 +92,24 @@ passport.authenticate('local', { failureRedirect: '/login' }),
 
 app.get('/success',function(req,res){
 	SesObj = req.session;
-	console.log(SesObj.login);
     res.end('success');	
 });
 
 app.get('/fail',function(req,res){
-	console.log('fail');
     res.end('fail');    
 });
+
 
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
-	  console.log('auth');
 });
  
 app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
-			SesObj = req.session;
-			SesObj.login='asd';
-			console.log(req.session);
+	SesObj = req.session;
+	SesObj.login=req.user.username;
     res.end('/success');
   });
   
