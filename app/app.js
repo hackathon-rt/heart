@@ -49,7 +49,7 @@ app.get('/fail',function(req,res){
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
-	  res.end('asd');
+	  onsole.log('auth');
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
 });
