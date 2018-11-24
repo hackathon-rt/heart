@@ -60,10 +60,14 @@ app.get('/',function(req,res){
     res.render('views/index.html');
 });
 
-app.get('/gettasks',function(req,res){
-	if(req.session.login){
-		
-	}
+app.get('/logout',function(req,res){
+	req.session.destroy(function(err) {
+	  if(err) {
+		console.log(err);
+	  } else {
+		res.redirect('/');
+	  }
+	});
 });
 
 app.get('/auth', function (req, res) {
@@ -104,6 +108,15 @@ app.post('/uploadphoto', (req, res) => {
 });
 
 app.get('/getdata',function(req,res){
+	if(req.query.act==='getlogin'){
+		var ans;
+		if(req.session.login){
+			ans={ans:true,username:req.session.login}
+		}else{
+			ans={ans:false}
+		};
+		res.end(JSON.stringify(ans));
+	};		
 	if(req.query.act==='getcontacts'){
 		dbConnect.queryDB(`select * from contacts`)
 			.then(result => {
@@ -188,7 +201,7 @@ app.get('/auth/vkontakte/callback',
   function(req, res) {
 	SesObj = req.session;
 	SesObj.login=req.user.username;
-    res.end('/success');
+    res.end('/');
   });
   
 passport.serializeUser(function (user, done) {
