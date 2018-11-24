@@ -17,5 +17,5 @@ app.listen(port,'0.0.0.0',function(){
 });
 
 app.get('/',function(req,res){
-    res.render('login.html');
+    res.render('views/index.html');
 });
