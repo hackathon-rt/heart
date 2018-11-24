@@ -7,12 +7,7 @@ var session = require('express-session');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
-const dbConfig = {
-  user: 'heart_admin',
-  password: '[frfnjyfgg2018',
-  host: '81.177.165.118',
-  port: 33123,
-}
+const dbConnect = require('./dbConnect');
  
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
@@ -26,20 +21,33 @@ app.use(session({secret: 'QdtVr56zP',resave: true,saveUninitialized: true}));
 app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
+
+ 		dbConnect.queryDB(`SELECT * from users LIMIT 1`)
+			.then(result => {
+				console.log(result);
+			})   
+ 
+/*   		dbConnect.queryDB(`INSERT INTO users (username,password) VALUES ('admin','admin')`)
+			.then(result => {
+				console.log(result);
+			})  */
  
 passport.use('local', new AuthLocalStrategy(
-    function (username, password, done) {
-        if (username == "admin" && password == "admin") {
-            return done(null, {
-                username: "admin",
-                photoUrl: "url_to_avatar",
-                profileUrl: "url_to_profile"
-            });
-        }
- 
-        return done(null, false, { 
-            message: 'Неверный логин или пароль' 
-        });
+    function (username, password, done) {	
+		dbConnect.queryDB(`SELECT * from users where username='`+username+`' and password='`+password+`' LIMIT 1`)
+			.then(result => {
+				if(result.rows.length){
+					if (username == result.rows[0].username && password == result.rows[0].password) {
+						return done(null, {
+							username: result.rows[0].username
+						});
+					}					
+				}else{
+					return done(null, false, { 
+						message: 'Неверный логин или пароль' 
+					});					
+				};
+			})
     }
 )); 
  
@@ -49,16 +57,34 @@ passport.use(new VKontakteStrategy({
     callbackURL:  "http://mad.su/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
+
+	dbConnect.queryDB(`SELECT * from users where username='`+username+`' and password='`+password+`' LIMIT 1`)
+		.then(result => {
+			if(result.rows.length){
+				return done(null, {
+					username: profile.displayName,
+					photoUrl: profile.photos[0].value,
+					profileUrl: profile.profileUrl
+				});						
+			}else{
+				dbConnect.queryDB(`INSERT INTO users (username) VALUES ('`+profile.id+`')`)
+					.then(result => {
+						return done(null, {
+							username: profile.displayName,
+							photoUrl: profile.photos[0].value,
+							profileUrl: profile.profileUrl
+						});	
+					}) 				
+			};
+		})  
+
 /*     console.log(params); 
     console.log('__________'); 
     console.log(profile); 
 	console.log('__________'); 
     console.log(done);  */
-    return done(null, {
-        username: profile.displayName,
-        photoUrl: profile.photos[0].value,
-        profileUrl: profile.profileUrl
-    });	
+
+
   }
 ));
 
