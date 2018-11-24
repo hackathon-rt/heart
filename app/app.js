@@ -35,6 +35,10 @@ app.get('/',function(req,res){
     res.render('views/index.html');
 });
 
+app.get('/success',function(req,res){
+    res.end('success');
+});
+
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
