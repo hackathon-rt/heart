@@ -2,7 +2,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script src="js/core.js"></script>
+<script src="js/ymaps.js"></script>
+<style>
+    body, html {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+    #map {
+        width: 100%;
+        height: 90%;
+    }
+</style>
 <div id="logon_forms">
 	<span id="a_status">
 	</span>
@@ -22,6 +36,8 @@
 <input type="button" value="users" onclick="getusers();">
 <input type="button" value="partners" onclick="getpartners();">
 <input type="button" value="fullusers" onclick="getfullusers();">
+<input type="button" value="contacts" onclick="getcontacts();">
 <input type="button" value="tasks" onclick="gettasks();">
 <div id="content">
 </div>
+<div id="map" style="width: 100%; height: 100%;"></div>
