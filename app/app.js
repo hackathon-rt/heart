@@ -76,7 +76,7 @@ app.get('/sign-out', function (req, res) {
 
 app.post('/auth', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/auth',
+    failureRedirect: '/fail',
     failureFlash: true })
 );
 
