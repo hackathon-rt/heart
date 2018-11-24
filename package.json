@@ -1,0 +1,23 @@
+{
+  "name": "heart",
+  "version": "1.0.0",
+  "description": "node app.js",
+  "main": "index.js",
+  "dependencies": {
+    "passport": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackathon-rt/heart.git"
+  },
+  "author": "RT_XYZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hackathon-rt/heart/issues"
+  },
+  "homepage": "https://github.com/hackathon-rt/heart#readme"
+}
