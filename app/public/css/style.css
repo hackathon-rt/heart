@@ -1,0 +1,75 @@
+.main-navbar {
+    background-color: #101010;
+}
+.heart-rt {
+    width: 100%;
+    height: 1000px;
+    background-color: #313d46;
+    position: relative;
+}
+.heart-rt p {
+    /*font-family: ;*/
+    position: absolute;
+    margin: 0px;
+    font-size: 85px;
+    color: #f5f7f8;
+    text-shadow: 0 0 0.2em rgba(255, 255, 255, 0.4);
+}
+.heart-rt .upper_heart-div p {
+    left: 30px;
+    top: 10px;
+    transition-duration: 0.5s;
+}
+.heart-rt  .bottom_heart-div p{
+    left: 1040px;
+    top: 825px;
+    transition-duration: 0.5s;
+}
+.arrow_bottom {
+    position: absolute;
+    left: 800px;
+    top: 88px;
+    transform: rotate(180deg);
+}
+.arrow_top {
+    position: absolute;
+    top: 777px;
+    left: 935px;
+}
+.heart-rt .upper_heart,
+.upper_heart_hover{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    left: 747px;
+    top: 226px;
+}
+
+.bottom_heart,
+.bottom_heart_hover{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    left: 766px;
+    top: 484px;
+}
+.upper_heart_hover,
+.bottom_heart_hover{
+    opacity: 0;
+    transition-duration: 0.5s;
+}
+
+.upper_heart-div:hover > .upper_heart_hover,
+.bottom_heart-div:hover > .bottom_heart_hover{
+    opacity: 1;
+    transition-duration: 0.5s;
+}
+
+.heart-rt .upper_heart-div:hover p {
+    color: #e9bbbb;
+    transition-duration: 0.5s;
+}
+.heart-rt .bottom_heart-div:hover p {
+    color: #e9bbbb;
+    transition-duration: 0.5s;
+}
