@@ -38,9 +38,10 @@ app.get('/',function(req,res){
 app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
+	  res.end('asd');
     // The request will be redirected to vk.com for authentication, so
     // this function will not be called.
-  });
+});
  
 app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
