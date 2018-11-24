@@ -14,10 +14,7 @@ passport.use(new VKontakteStrategy({
     callbackURL:  "http://mad.su/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
-    // console.log(params.email); // getting the email
-    User.findOrCreate({ vkontakteId: profile.id }, function (err, user) {
-      return done(err, user);
-    });
+    console.log(params); 
   }
 ));
 
