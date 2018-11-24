@@ -91,6 +91,8 @@ passport.authenticate('local', { failureRedirect: '/login' }),
 });
 
 app.get('/success',function(req,res){
+	SesObj = req.session;
+	console.log(SesObj.login);
     res.end('success');	
 });
 
