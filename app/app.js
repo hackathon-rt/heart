@@ -26,6 +26,11 @@ app.listen(port,'0.0.0.0',function(){
 			.then(result => {
 				console.log(result.rows);
 			})   
+			
+/* 		dbConnect.queryDB(`DELETE from users where username='14114796'`)
+			.then(result => {
+				console.log(result.rows);
+			})  */
  
 /*   		dbConnect.queryDB(`INSERT INTO users (username,password) VALUES ('admin','admin')`)
 			.then(result => {
