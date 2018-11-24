@@ -61,7 +61,6 @@ passport.use(new VKontakteStrategy({
 
 app.get('/',function(req,res){
 	SesObj = req.session;
-	SesObj.login='asd';
 	if(SesObj.login)console.log(login);
     res.render('views/index.html');
 	console.log(req.user); 
