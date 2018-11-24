@@ -6,6 +6,10 @@ var passport = require('passport');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
+var path = require('path');
+var flash = require('connect-flash');
+var session = require('express-session');
+var config = require("nconf");
  
 passport.use('local', new AuthLocalStrategy(
     function (username, password, done) {
@@ -43,11 +47,18 @@ passport.use(new VKontakteStrategy({
   }
 ));
 
+app.enable('trust proxy');
+app.use(express.logger('dev'));
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session(sessionOptions));
+app.use(flash());
+app.use(app.router);
 
 app.use(passport.initialize());
 app.use(passport.session());
