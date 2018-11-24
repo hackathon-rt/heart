@@ -14,11 +14,11 @@ passport.use(new VKontakteStrategy({
     callbackURL:  "http://mad.su/auth/vkontakte/callback"
   },
   function(accessToken, refreshToken, params, profile, done) {
-    res.end(params); 
-    res.end('__________'); 
-    res.end(profile); 
-	res.end('__________'); 
-    res.end(done); 
+    console.log(params); 
+    console.log('__________'); 
+    console.log(profile); 
+	console.log('__________'); 
+    console.log(done); 
   }
 ));
 
@@ -52,5 +52,5 @@ app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/success');
   });
