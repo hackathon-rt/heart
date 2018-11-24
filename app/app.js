@@ -7,7 +7,12 @@ var session = require('express-session');
 const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
-
+const dbConfig = {
+  user: 'heart_admin',
+  password: '[frfnjyfgg2018',
+  host: '81.177.165.118',
+  port: 33123,
+}
  
 app.set('views', __dirname + '/public');
 app.engine('html', require('ejs').renderFile);
@@ -81,7 +86,16 @@ app.post('/auth',
 	SesObj = req.session;
 	SesObj.login=req.user.username;	  
     res.end('success');
-  });
+});
+
+app.post('/register',function(req,res){
+	if(!req.session.login){
+		
+	}else{
+		ans={ans:'error: you allready logged in'};
+		res.end(JSON.stringify(ans));
+	};
+});
 
 passport.authenticate('local', { failureRedirect: '/login' }),
 	app.post('/auth', 
