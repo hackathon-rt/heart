@@ -1,129 +1,84 @@
 window.onload = function () {
-    var monitor = document.createElement ( "canvas" );
 
-    var canvasWidth = 400,
-        canvasHeight = 200;
+    window.requestAnimFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
 
-    monitor.width = canvasWidth;
-    monitor.height = canvasHeight;
+    var canvas = document.getElementById('canvas'),
+        context = canvas.getContext('2d'),
 
-    document.body.appendChild ( monitor );
+        width = canvas.width = document.body.offsetWidth,
+        height = canvas.height = 100,
+        ball = {
+            x: 0,
+            y: height / 2,
+        },
+        point = {
+            x: 0,
+            y: ball.y
+        },
+        current_point = 0;
+    //context.fillStyle = "rgba(49, 61, 70, 1)";
 
-    var ctx = monitor.getContext ( "2d" );
+    var points = [
+        { y: 0, x: 20 },
+        { y: 0, x: 1 },
+        { y: 3, x: 1 },
+        { y: -10, x: 2 },
+        { y: 10, x: 2 },
+        { y: -12, x: 3 },
+        { y: 35, x: 5 },
+        { y: -25, x: 4 },
+        { y: 14, x: 3 },
+        { y: 5, x: 2 },
+        { y: 0, x: 1 },
+        { y: 0, x: 20 }
+    ];
 
-    ctx.save ();
-
-    ctx.shadowColor = '#555555';
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-
-    ctx.beginPath ();
-
-    ctx.fillStyle = 'rgba( 255, 211, 171, 1 )';
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba( 20, 50, 20, 1 )';
-    ctx.rect ( 0, 0, canvasWidth, canvasHeight );
-    ctx.fill ();
-    ctx.stroke ();
-
-    ctx.closePath ();
-
-    ctx.beginPath ();
-
-    ctx.arc( 350, 25, 20, 0, 2 * Math.PI, false );
-    ctx.fillStyle = 'rgba( 200, 200, 100, 1 )';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba( 180, 179, 80, 1 )';
-    ctx.stroke();
-
-    ctx.closePath ();
-
-    ctx.beginPath ();
-
-    ctx.arc( 350, 85, 20, 0, 2 * Math.PI, false );
-    ctx.fillStyle = 'rgba( 200, 200, 100, 1 )';
-    ctx.fill();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba( 180, 179, 80, 1 )';
-    ctx.stroke();
-
-    ctx.closePath ();
-
-    var screenWidth = 300,
-        screenHeight = 150,
-        screenTop = 5,
-        screenLeft = 5;
-
-    function screenBackgroundRender ( a ) {
-
-        ctx.beginPath ();
-
-        ctx.fillStyle = 'rgba( 20, 20, 20, ' + a + ' )';
-        ctx.fillRect ( screenLeft, screenTop, screenWidth, screenHeight );
-
-        ctx.closePath ();
-
-        ctx.beginPath ();
-
-        for ( var j = 10 + screenTop; j < screenTop + screenHeight; j = j + 10 ) {
-            ctx.moveTo( screenLeft, j );
-            ctx.lineTo( screenLeft + screenWidth, j );
+    render();
+    function animateTo() {
+        function dist(x1, x2, y1, y2) {
+            var dx = x1 - x2,
+                dy = y1 - y2;
+            return {
+                d: Math.sqrt(dx * dx + dy * dy),
+                dx: dx,
+                dy: dy
+            };
         }
-
-        for ( var i = 10 + screenLeft; i < screenLeft + screenWidth; i = i + 10 ) {
-            ctx.moveTo( i, screenTop );
-            ctx.lineTo( i, screenTop + screenHeight );
+        var dis = dist(ball.x, point.x + points[current_point].x, ball.y, point.y + points[current_point].y);
+        if (dis.d > 1) {
+            var s = Math.abs(dis.dy) > 13 ? 2 : 1;
+            ball.x += -(dis.dx / dis.d) * s;
+            ball.y += -(dis.dy / dis.d) * s;
+        } else {
+            ball.x = point.x + points[current_point].x;
+            ball.y = point.y + points[current_point].y;
+            point.x += points[current_point].x;
+            current_point++;
+            if (current_point >= points.length || ball.x > width) {
+                current_point = 0;
+                if (ball.x > width) {
+                    point.x = ball.x = 0;
+                }
+            }
         }
-
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba( 20, 50, 20, ' + a + ' )';
-        ctx.stroke ();
-        ctx.closePath ();
-
+    }
+    function render() {
+        requestAnimFrame(render);
+        animateTo();
+        //context.fillStyle = "rgba(0, 0, 0, .01)";
+        //context.fillRect(0, 0, width, height);
+        context.fillStyle = "rgba(230, 230, 230, 1)";
+        context.beginPath();
+        context.arc(ball.x, ball.y, 1, 0, 2 * Math.PI, true);
+        context.closePath();
+        context.fill();
     }
 
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    // screenBackgroundRender ( 1 );
-
-
-    //animation
-    PosX = screenLeft;
-    PosY = screenTop + screenHeight / 2;
-
-    setInterval ( function () {
-
-        ctx.restore ();
-
-        screenBackgroundRender ( 0.06 )
-
-        ctx.beginPath ();
-        ctx.moveTo( PosX, PosY );
-        PosX = PosX + 1;
-        if ( PosX >= screenLeft + screenWidth * 40 / 100 && PosX < screenLeft + screenWidth * 45 / 100 ) {
-            PosY = PosY - screenHeight * 3 / 100;
-        }
-        if ( PosX >= screenLeft + screenWidth * 45 / 100 && PosX < screenLeft + screenWidth * 55 / 100 ) {
-            PosY = PosY + screenHeight * 3 / 100;
-        }
-        if ( PosX >= screenLeft + screenWidth * 55 / 100 && PosX < screenLeft + screenWidth * 60 / 100 ) {
-            PosY = PosY - screenHeight * 3 / 100;
-        }
-        if ( PosX >= screenLeft + screenWidth * 60 / 100 && PosX <= screenLeft + screenWidth ) {
-            PosY = screenTop + screenHeight / 2;
-        }
-        if ( PosX > screenLeft + screenWidth ) {
-            PosX = screenLeft;
-            ctx.moveTo( PosX, PosY );
-        }
-        ctx.lineTo( PosX, PosY );
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#33ff33';
-        ctx.stroke ();
-        ctx.closePath ();
-
-    }, 6 );
 }

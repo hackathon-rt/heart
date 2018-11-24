@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+    </style>
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark main-navbar">
-    <img src="img/like2.png" alt="Ключ к сердцу"><p class="navbar-brand m-0 mr-auto"></p>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Главная<span class="sr-only"></span></a>
-            </li>
-            <!--<li class="nav-item">-->
+    <nav class="navbar navbar-expand-lg navbar-dark main-navbar">
+        <img src="img/like2.png" alt="Ключ к сердцу">
+        <p class="navbar-brand m-0 mr-auto"></p>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Главная<span class="sr-only"></span></a>
+                </li>
+                <!--<li class="nav-item">-->
                 <!--<a class="nav-link" href="#">Получить задание</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
                 <!--<a class="nav-link" href="#">Предложить помощь</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item">-->
+                <!--</li>-->
+                <!--<li class="nav-item">-->
                 <!--<a class="nav-link" href="#">Карта добра</a>-->
-            <!--</li>-->
-            <li class="nav-item">
-                <a class="nav-link" href="#">Личный кабинет</a>
-            </li>
-        </ul>
+                <!--</li>-->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Личный кабинет</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="heart-rt">
+        <img src="img/arrow-top.png" class="arrow_bottom">
+        <img src="img/arrow-top.png" class="arrow_top">
+        <div class="upper_heart-div">
+            <p>Получить задание</p>
+            <img src="img/upper_heart.png" class="upper_heart" alt="Верхняя часть">
+            <img src="img/upper_heart_hover.png" class="upper_heart_hover">
+        </div>
+        <div><canvas id="canvas" width="550" height="300"></canvas></div>
+        <div class="bottom_heart-div">
+            <p>Предложить помощь</p>
+            <img src="img/bottom_heart.png" class="bottom_heart" alt="Верхняя часть">
+            <img src="img/bottom_heart_hover.png" class="bottom_heart_hover">
+        </div>
     </div>
-</nav>
-<div class="heart-rt">
-    <img src="img/arrow-top.png" class="arrow_bottom">
-    <img src="img/arrow-top.png" class="arrow_top">
-    <div class="upper_heart-div">
-        <p>Получить задание</p>
-        <img src="img/upper_heart.png" class="upper_heart" alt="Верхняя часть">
-        <img src="img/upper_heart_hover.png" class="upper_heart_hover">
-    </div>
-    <div><canvas id="cvs3" width="550" height="300" ></canvas></div>
-    <div class="bottom_heart-div">
-        <p>Предложить помощь</p>
-        <img src="img/bottom_heart.png" class="bottom_heart" alt="Верхняя часть">
-        <img src="img/bottom_heart_hover.png" class="bottom_heart_hover">
-    </div>
-</div>
-<script src="../js/script.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+    <script src="../js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
 </body>
+
 </html>

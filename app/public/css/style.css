@@ -73,3 +73,8 @@
     color: #e9bbbb;
     transition-duration: 0.5s;
 }
+
+canvas{
+    margin-top: 400px;
+}
+

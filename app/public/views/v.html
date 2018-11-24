@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first Vue app</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <app-nav>Menu</app-nav>
+        <app-view>
+            <app-content>Main</app-content>
+            <app-content>Cabinet</app-content>
+        </app-view>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: 'app',
+
+            mounted: function () {
+                console.log('mounted!');
+            }
+        })
+    </script>
+</body>
+
+</html>
