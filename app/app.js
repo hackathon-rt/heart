@@ -112,6 +112,7 @@ app.get('/auth/vkontakte/callback',
   function(req, res) {
 			SesObj = req.session;
 			SesObj.login='asd';
+			console.log(req.session);
     res.end('/success');
   });
   
