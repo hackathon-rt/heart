@@ -7,6 +7,19 @@ const port = 8881;
 const VKontakteStrategy = require('passport-vkontakte').Strategy;
 const AuthLocalStrategy = require('passport-local').Strategy;
  
+app.set('views', __dirname + '/public');
+app.engine('html', require('ejs').renderFile);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static('public'));
+app.use(passport.initialize());
+app.use(passport.session()); 
+ 
+
+app.listen(port,'0.0.0.0',function(){
+	console.log('Server started');
+}); 
+ 
 passport.use('local', new AuthLocalStrategy(
     function (username, password, done) {
 		console.log(username, password)
@@ -43,19 +56,6 @@ passport.use(new VKontakteStrategy({
   }
 ));
 
-app.set('views', __dirname + '/public');
-app.engine('html', require('ejs').renderFile);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static('public'));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.listen(port,'0.0.0.0',function(){
-	console.log('Server started');
-});
-
 app.get('/',function(req,res){
     res.render('views/index.html');
 });
@@ -65,7 +65,6 @@ app.get('/auth', function (req, res) {
         res.redirect('/');
         return;
     }
-
     res.render('views/login.html');
 });
 
@@ -74,16 +73,22 @@ app.get('/sign-out', function (req, res) {
     res.redirect('/');
 });
 
-
 app.post('/auth', 
   passport.authenticate('local', { failureRedirect: '/fail' }),
   function(req, res) {
     res.end('success');
   });
 
+passport.authenticate('local', { failureRedirect: '/login' }),
+	app.post('/auth', 
+	function(req, res) {
+    res.redirect('/');
+});
+
 app.get('/success',function(req,res){
-	console.log('success get'); 
-    res.end('success');	
+	console.log('success'); 
+    res.end('success');
+	
 });
 
 app.get('/fail',function(req,res){
@@ -95,14 +100,11 @@ app.get('/auth/vkontakte',
   passport.authenticate('vkontakte'),
   function(req, res){
 	  console.log('auth');
-    // The request will be redirected to vk.com for authentication, so
-    // this function will not be called.
 });
  
 app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
-    // Successful authentication, redirect home.
 	console.log('/success');
     res.redirect('/success');
   });
