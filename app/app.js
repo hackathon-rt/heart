@@ -110,6 +110,10 @@ app.post('/uploadphoto', (req, res) => {
     };
 });
 
+app.get('/tasks',function(req,res){
+	res.render('views/tasks.html');
+});
+
 app.get('/getdata',function(req,res){
 	if(req.query.act==='getlogin'){
 		var ans;
@@ -160,34 +164,78 @@ app.get('/getdata',function(req,res){
 });
 
 app.post('/profile',function(req,res){
-	console.log(req.body);
-	res.end('ok');
-/* 		dbConnect.queryDB(`UPDATE contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
-			.then(result => {
-				ans={ans:'success'};
-				res.end(JSON.stringify(ans));
-		})	 */					
+	dbConnect.queryDB(`			
+		UPDATE 
+		public.contacts 
+		SET 
+		lastname = '`+req.body.lastname+`', 
+		firstname = '`+req.body.firstname+`', 
+		email = '`+req.body.email+`', 
+		address = '`+req.body.address+`', 
+		cellphone = '`+req.body.cellphone+`' 
+		WHERE contacts_id = (
+		SELECT pc.contacts_id 
+		FROM partners_contacts pc
+		WHERE pc.is_main = true AND pc.partners_id = (
+		SELECT partners_id FROM partners p WHERE p.users_id = '`+req.session.users_id+`'
+		)
+		)
+		`)
+		.then(result => {
+			ans={ans:'success'};
+			res.end(JSON.stringify(ans));
+	})		 					
 });
 
 app.get('/profile',function(req,res){
-	res.render('views/profile.html');					
+	if(req.query.act==='getprofile'){
+		console.log(req.session.users_id);
+		dbConnect.queryDB(`			
+			SELECT c.* 
+			FROM contacts c
+			LEFT JOIN partners_contacts pc ON pc.contacts_id = c.contacts_id
+			LEFT JOIN partners p ON p.partners_id = pc.partners_id
+			WHERE p.users_id = '`+req.session.users_id+`'
+			`)
+			.then(result => {
+				ans={ans:'success',body:result.rows[0]};
+				res.end(JSON.stringify(ans));
+		})		 						
+	}else{
+		res.render('views/profile.html');	
+	};
 });
 
 app.post('/setdata',function(req,res){
-	if(req.query.act==='deleteuser' && req.query.username){
+	if(req.body.act==='deleteuser' && req.query.username){
 		dbConnect.queryDB(`DELETE from users where username='`+req.query.username+`'`)
 			.then(result => {
 				ans={ans:'success'};
 				res.end(JSON.stringify(ans));
 		})				
 	};	
-	if(req.query.act==='deletecontact' && req.query.contacts_id){
+	if(req.body.act==='deletecontact' && req.query.contacts_id){
 		dbConnect.queryDB(`DELETE from contacts where contacts_id='`+req.query.contacts_id+`'`)
 			.then(result => {
 				ans={ans:'success'};
 				res.end(JSON.stringify(ans));
 		})				
-	};		
+	};	
+	if(req.body.act==='settasks'){//partner_id, partner
+    		dbConnect.queryDB(`
+			SELECT 
+			partners_id
+			FROM 
+			partners where users_id='`+req.session.users_id+`'
+			`)
+			.then(result => {
+				dbConnect.queryDB(`INSERT INTO tasks (owner_id,text) VALUES ('`+result.rows[0].partners_id+`','`+req.body.text+`')`)
+					.then(result => {
+						res.end();
+					}) 						
+			})    
+ 			
+	};	
 });
 
 app.post('/register',function(req,res){
@@ -230,8 +278,7 @@ app.get('/auth/vkontakte',
 app.get('/auth/vkontakte/callback',
   passport.authenticate('vkontakte', {failureRedirect: '/fail'}),
   function(req, res) {
-	SesObj = req.session;
-	SesObj.login=req.user.username;
+	req.session.login=req.user.username;
     res.redirect('/');
   });
   
@@ -306,15 +353,18 @@ passport.use(new VKontakteStrategy({
 app.post('/auth', 
   passport.authenticate('local', { failureRedirect: '/fail' }),
   function(req, res) {
-	SesObj = req.session;
-	SesObj.login=req.user.username;	 
-	ans={ans:true,username:req.user.username}
-    res.end(JSON.stringify(ans));
+ 	dbConnect.queryDB(`select users_id from users where username='`+req.user.username+`' limit 1`)
+		.then(result => {
+			req.session.login=req.user.username;
+			req.session.users_id=result.rows[0].users_id;
+			ans={ans:true,username:req.user.username+' '+req.session.users_id}
+			res.end(JSON.stringify(ans));
+	})  	  
+
 });
 
 passport.authenticate('local', { failureRedirect: '/login' }),
 	app.post('/auth', 
 	function(req, res) {
-		
     res.redirect('/');
 });
