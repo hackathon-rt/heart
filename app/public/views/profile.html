@@ -14,41 +14,40 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark main-navbar m-0 p-0">
-<<<<<<< HEAD
-        <img src="img/like2.png" alt="Ключ к сердцу">
-=======
-        <p class="navbar-brand m-0 mr-auto"></p>
->>>>>>> 65cb55741126ed416d6ecaf8fa8eb5b00456d77a
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Главная<span class="sr-only"></span></a>
-                </li>
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Получить задание</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Предложить помощь</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                <!--<a class="nav-link" href="#">Карта добра</a>-->
-                <!--</li>-->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Личный кабинет</a>
-                </li>
-            </ul>
-        </div>
+        <<<<<<< HEAD <img src="img/like2.png" alt="Ключ к сердцу">
+            =======
+            <p class="navbar-brand m-0 mr-auto"></p>
+            >>>>>>> 65cb55741126ed416d6ecaf8fa8eb5b00456d77a
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Главная<span class="sr-only"></span></a>
+                    </li>
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">Получить задание</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">Предложить помощь</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" href="#">Карта добра</a>-->
+                    <!--</li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Личный кабинет</a>
+                    </li>
+                </ul>
+            </div>
     </nav>
     <div class="container">
         <div class="row">
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="/view/profile.html" class="list-group-item list-group-item-action list-lc">
+                    <a href="/views/profile.html" class="list-group-item list-group-item-action list-lc">
                         Профиль
                     </a>
-                    <a href="/view/tasks.html" class="list-group-item list-group-item-action list-lc">Задачи</a>
+                    <a href="/views/tasks.html" class="list-group-item list-group-item-action list-lc">Задачи</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -111,14 +110,14 @@
 		$( document ).ready(function() {
 			$.get('/profile', {
 				act:'getprofile'
-			}, function(data) {				
+			}, function(data) {
 				data=JSON.parse(data);
 				$('#lastname').val(data.body.lastname);
 				$('#firstname').val(data.body.firstname);
 				$('#inputEmail4').val(data.body.email);
 				$('#inputAddress').val(data.body.address);
 				$('#cellphone').val(data.body.cellphone);
-			});			
+			});
 		});
         $('#btnSaveProfile').click(function () {
 			$.post('/profile', {
@@ -128,8 +127,8 @@
 				address:$('#inputAddress').val(),
 				cellphone:$('#cellphone').val()
 			}, function(data) {
-				
-			});	
+
+			});
 >>>>>>> 65cb55741126ed416d6ecaf8fa8eb5b00456d77a
         });
     </script>
