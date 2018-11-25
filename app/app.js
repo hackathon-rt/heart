@@ -62,6 +62,14 @@ app.get('/',function(req,res){
     res.render('views/text2.html');
 });
 
+app.get('/myskills',function(req,res){
+	if(req.session.login){
+		res.render('views/myskills.html');
+	}else{
+		res.redirect('/');
+	};
+});
+
 app.get('/logout',function(req,res){
 	req.session.destroy(function(err) {
 	  if(err) {
@@ -116,7 +124,6 @@ app.get('/tasks',function(req,res){
 	}else{
 		res.redirect('/');
 	};
-	
 });
 
 app.get('/getdata',function(req,res){
