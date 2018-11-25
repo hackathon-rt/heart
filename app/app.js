@@ -161,11 +161,11 @@ app.get('/getdata',function(req,res){
 
 app.post('/profie',function(req,res){
 	console.log(req.body);
-		dbConnect.queryDB(`UPDATE contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
+/* 		dbConnect.queryDB(`UPDATE contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
 			.then(result => {
 				ans={ans:'success'};
 				res.end(JSON.stringify(ans));
-		})						
+		})	 */					
 });
 
 app.get('/profie',function(req,res){
