@@ -159,8 +159,9 @@ app.get('/getdata',function(req,res){
 	};		
 });
 
-app.post('/profie',function(req,res){
+app.post('/profile',function(req,res){
 	console.log(req.body);
+	res.end('ok');
 /* 		dbConnect.queryDB(`UPDATE contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
 			.then(result => {
 				ans={ans:'success'};
