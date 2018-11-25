@@ -128,3 +128,15 @@ canvas{
 .icon_p {
     margin-top:
 }
+
+/* .list-lc {
+    z-index: 2;
+    color: #fff;
+    background-color: #ff7979;
+    border-color: #ff7979;
+}*/
+
+.list-lc.active:first-child {
+     border-top-left-radius: 0;
+    border-top-right-radius: 0;
+} 
