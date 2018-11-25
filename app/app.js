@@ -114,8 +114,9 @@ app.get('/tasks',function(req,res){
 	if(req.session.login){
 		res.render('views/tasks.html');
 	}else{
-		res.render('/');
+		res.redirect('/');
 	};
+	
 });
 
 app.get('/getdata',function(req,res){
