@@ -18,25 +18,27 @@ app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(session({secret: 'QdtVr56zP',resave: true,saveUninitialized: true})); 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+
 
 app.listen(port,'0.0.0.0',function(){
 	console.log('Server started');
 }); 
 
-/*    		dbConnect.queryDB(`
+/*     		dbConnect.queryDB(`
 			SELECT 
-			us.*, pa.* 
+			*
 			FROM 
-			users us 
-			JOIN partners pa
-			ON us.users_id=pa.users_id
+			tasks
 			`)
 			.then(result => {
 				console.log(result.rows);
-			})   */ 
+			})     */
 
 			
 		//SELECT users.username FROM users INNER JOIN contacts ON users.users_id=contacts.contacts_id	
+		//UPDATE tasks SET status = 1 WHERE id = '1234';
 			
 /* 		dbConnect.queryDB(`DELETE from users where username='14114796'`)
 			.then(result => {
@@ -94,11 +96,12 @@ app.post('/uploadphoto', (req, res) => {
         if(req.files.upload && req.files.upload.mimetype.indexOf('image')>-1){
                 let uploadedfile = req.files.upload;
                 var filename=uuid.v4();
-                uploadedfile.mv(__dirname + '/photos/'+filename+'.jpg' , function(err) {
+                uploadedfile.mv(__dirname + '/public/photos/'+filename+'.jpg' , function(err) {
                         if (err){
+								console.log(err);
                                return res.status(500).send(err);
                         }else{
-							
+							res.end('<a href="photos/'+filename+'.jpg">photo link</a><br><img src="photos/'+filename+'.jpg">')
                         };
                 })
         }else{
@@ -136,7 +139,7 @@ app.get('/getdata',function(req,res){
 			FROM 
 			users us 
 			JOIN partners pa
-			ON us.users_id=pa.users_id
+			ON us.users_id=pa.users_id LIMIT 1000
 			`)
 			.then(result => {
 				res.end(JSON.stringify(result.rows));
@@ -156,7 +159,24 @@ app.get('/getdata',function(req,res){
 	};		
 });
 
-app.get('/setdata',function(req,res){
+app.post('/profie',function(req,res){
+	console.log(req.body);
+		dbConnect.queryDB(`UPDATE contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
+			.then(result => {
+				ans={ans:'success'};
+				res.end(JSON.stringify(ans));
+		})						
+});
+
+app.get('/profie',function(req,res){
+		dbConnect.queryDB(`SELECT * FROM contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
+			.then(result => {
+				ans={ans:'success'};
+				res.end(JSON.stringify(ans));
+		})						
+});
+
+app.post('/setdata',function(req,res){
 	if(req.query.act==='deleteuser' && req.query.username){
 		dbConnect.queryDB(`DELETE from users where username='`+req.query.username+`'`)
 			.then(result => {
@@ -164,6 +184,13 @@ app.get('/setdata',function(req,res){
 				res.end(JSON.stringify(ans));
 		})				
 	};	
+	if(req.query.act==='deletecontact' && req.query.contacts_id){
+		dbConnect.queryDB(`DELETE from contacts where contacts_id='`+req.query.contacts_id+`'`)
+			.then(result => {
+				ans={ans:'success'};
+				res.end(JSON.stringify(ans));
+		})				
+	};		
 });
 
 app.post('/register',function(req,res){
