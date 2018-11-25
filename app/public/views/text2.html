@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ключ к сердцу</title>
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script src="../js/core.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style2.css">
+    <style>
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark main-navbar m-0 p-0">
+    <img src="img/like2.png" alt="Ключ к сердцу">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Главная<span class="sr-only"></span></a>
+            </li>
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">Получить задание</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">Предложить помощь</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="#">Карта добра</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="#">Личный кабинет</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container" style="padding: 0px;">
+    <div class="row">
+        <div class="main">
+            <p>Получить задание</p>
+            <p>Предложить помощь</p>
+            <img src="img/arrow-top.png" class="arrow_bottom">
+            <img src="img/arrow-top.png" class="arrow_top">
+            <img src="img/puls.png" class="puls">
+            <div class="upper_heart-div">
+                <img src="img/upper_heart.png" class="upper_heart" alt="Верхняя часть">
+                <img src="img/upper_heart_hover.png" class="upper_heart_hover">
+            </div>
+
+            <div class="bottom_heart-div">
+                <img src="img/bottom_heart.png" class="bottom_heart" alt="Верхняя часть">
+                <img src="img/bottom_heart_hover.png" class="bottom_heart_hover">
+            </div>
+        </div>
+    </div>
+    <div class="row source">
+        <div class="col-4">
+            <div class="icon">
+                <div class="icon2">
+                    <img src="img/social.png" class="social">
+                    <p>26</p>
+                </div>
+                <P class="icon_p">СПЕЦИАЛЬНЫХ УЧРЕЖДЕНИЙ</P>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon">
+                <div class="icon2">
+                    <img src="img/surprice.png" class="social">
+                    <p>136</p>
+                </div>
+                <P class="icon_p">ДОБРЫХ ДЕЛ</P>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="icon">
+                <div class="icon2">
+                    <img src="img/dislike.png" class="social">
+                    <p>1</p>
+                </div>
+                <P class="icon_p">НЕСБЫВШИСЯ МЕЧТ</P>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="map"></div>
+    </div>
+    <div class="row back">
+        <div class="col-2">
+        </div>
+        <div class="col-8 back-form">
+            <!--<div class="cho_oi"></div>-->
+            <p>Тема</p>
+            <div class="polosk">
+            </div>
+            <a href="#">Выполнить</a>
+            <div class="polosk2"></div>
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+    <div class="row">
+        <div class="button2form">
+            <p>Предложить помощь</p>
+        </div>
+    </div>
+    <footer class="page-footer font-small mdb-color lighten-3 pt-4">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left back">
+
+            <!-- Grid row -->
+            <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
+
+                    <!-- Content -->
+                    <h5 class="font-weight-bold text-uppercase mb-4">Благотворительный сервис адресной помощи</h5>
+                    <p>Обычно благотворительные фонды собирают денежные средства и расходуют их по своему усмотрению, на цели благотворительности. Мы хотим изменить этот подход,  помогаю любому неравнодушному человеку совершать добрые дела напрямую. </p>
+
+                </div>
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <!-- Grid column -->
+
+                <hr class="clearfix w-100 d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 text-center mx-auto my-4">
+
+                    <!-- Social buttons -->
+                    <h5 class="font-weight-bold text-uppercase mb-4">Follow Us</h5>
+
+                    <!-- Facebook -->
+                    <!--<a type="button" class="btn-floating btn-fb">-->
+                        <img src="img/vk.png" height="40" width="40" style="margin-left: 20px;">
+                    <!--</a>-->
+                    <!-- Twitter -->
+                    <!--<a type="button" class="btn-floating btn-tw">-->
+                        <img src="img/facebook.png" height="40" width="40" style="margin-left: 20px;"/>
+                    <!--</a>-->
+                    <!-- Google +-->
+                    <!--<a type="button" class="btn-floating btn-gplus">-->
+                        <img src="img/instagram.png" height="40" width="40" style="margin-left: 20px;"/>
+                    <!--</a>-->
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+
+        <!-- Copyright -->
+
+    </footer>
+</div>
+</div>
+
+<script src="../js/script2.js"></script>
+<script src="../js/ymaps.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>
