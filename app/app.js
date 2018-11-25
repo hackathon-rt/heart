@@ -168,10 +168,7 @@ app.get('/getdata',function(req,res){
 		})				
 	};		
 	if(req.query.act==='gettasks'){
-		var query;
-		dbConnect.queryDB(`SELECT * FROM partners WHERE users_id = '`+req.session.users_id+`' AND partners_type = 1`)
-			.then(result => {
-				if(result.rows.length){
+				if(!req.session.username!==='14114796'){
 					query=`SELECT * FROM TASKS t
 							LEFT JOIN partners p ON p.partners_id = t.owner_id
 							WHERE p.partners_id = (SELECT partners.partners_id FROM partners
@@ -186,8 +183,7 @@ app.get('/getdata',function(req,res){
 						.then(result => {
 							res.end(JSON.stringify(result.rows));
 					})						
-				};
-		})						
+				};					
 	};		
 });
 
