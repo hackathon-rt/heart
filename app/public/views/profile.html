@@ -81,8 +81,14 @@
 		$( document ).ready(function() {
 			$.get('/profile', {
 				act:'getprofile'
-			}, function(data) {
-				console.log(data);
+			}, function(data) {				
+				data=JSON.parse(data);
+				console.log(data.body);
+				$('#lastname').val(data.body.lastname),
+				$('#firstname').val(data.body.firstname),
+				$('#inputEmail4').val(data.body.inputEmail4),
+				$('#address').val(data.body.address),
+				$('#cellphone').val(data.body.cellphone)
 			});			
 		});
         $('#btnSaveProfile').click(function () {
