@@ -168,7 +168,7 @@ app.get('/getdata',function(req,res){
 		})				
 	};		
 	if(req.query.act==='gettasks'){
-				if(!req.session.username!==='14114796'){
+				if(!req.session.username!=='14114796'){
 					query=`SELECT * FROM TASKS t
 							LEFT JOIN partners p ON p.partners_id = t.owner_id
 							WHERE p.partners_id = (SELECT partners.partners_id FROM partners
