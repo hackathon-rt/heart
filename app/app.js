@@ -59,7 +59,7 @@ app.listen(port,'0.0.0.0',function(){
 
 app.get('/',function(req,res){
 	SesObj = req.session;
-    res.render('views/index.html');
+    res.render('views/text2.html');
 });
 
 app.get('/logout',function(req,res){
@@ -111,7 +111,11 @@ app.post('/uploadphoto', (req, res) => {
 });
 
 app.get('/tasks',function(req,res){
-	res.render('views/tasks.html');
+	if(req.session.login){
+		res.render('views/tasks.html');
+	}else{
+		res.render('/');
+	};
 });
 
 app.get('/getdata',function(req,res){
@@ -156,6 +160,14 @@ app.get('/getdata',function(req,res){
 		})				
 	};		
 	if(req.query.act==='gettasks'){
+
+/* SELECT c.* 
+FROM contacts c
+LEFT JOIN partners_contacts pc ON pc.contacts_id = c.contacts_id
+LEFT JOIN partners p ON p.partners_id ON pc.partners_id
+WHERE p.users_id = $userId	 */
+		
+		
 		dbConnect.queryDB(`select * from tasks`)
 			.then(result => {
 				res.end(JSON.stringify(result.rows));
@@ -188,6 +200,7 @@ app.post('/profile',function(req,res){
 });
 
 app.get('/profile',function(req,res){
+	if(req.session.login){
 	if(req.query.act==='getprofile'){
 		console.log(req.session.users_id);
 		dbConnect.queryDB(`			
@@ -203,6 +216,9 @@ app.get('/profile',function(req,res){
 		})		 						
 	}else{
 		res.render('views/profile.html');	
+	};
+	}else{
+		res.redirect('/');
 	};
 });
 
@@ -222,19 +238,32 @@ app.post('/setdata',function(req,res){
 		})				
 	};	
 	if(req.body.act==='settasks'){//partner_id, partner
-    		dbConnect.queryDB(`
-			SELECT 
-			partners_id
-			FROM 
-			partners where users_id='`+req.session.users_id+`'
-			`)
-			.then(result => {
-				dbConnect.queryDB(`INSERT INTO tasks (owner_id,text) VALUES ('`+result.rows[0].partners_id+`','`+req.body.text+`')`)
-					.then(result => {
-						res.end();
-					}) 						
-			})    
- 			
+    	dbConnect.queryDB(`
+		SELECT 
+		partners_id
+		FROM 
+		partners where users_id='`+req.session.users_id+`'
+		`)
+		.then(result => {
+			dbConnect.queryDB(`INSERT INTO tasks (owner_id,text) VALUES ('`+result.rows[0].partners_id+`','`+req.body.text+`')`)
+				.then(result => {
+					res.end();
+				}) 						
+		})    			
+	};	
+	if(req.body.act==='assigntask'){//partner_id, partner
+    	dbConnect.queryDB(`
+		SELECT 
+		partners_id
+		FROM 
+		partners where users_id='`+req.session.users_id+`'
+		`)
+		.then(result => {
+			dbConnect.queryDB(`INSERT INTO tasks (owner_id,text) VALUES ('`+result.rows[0].partners_id+`','`+req.body.text+`')`)
+				.then(result => {
+					res.end();
+				}) 						
+		})    			
 	};	
 });
 
