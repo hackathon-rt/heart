@@ -169,11 +169,7 @@ app.post('/profie',function(req,res){
 });
 
 app.get('/profie',function(req,res){
-		dbConnect.queryDB(`SELECT * FROM contact SET email = '`+req.body.email+`' WHERE username = '`+req.session.login+`''`)
-			.then(result => {
-				ans={ans:'success'};
-				res.end(JSON.stringify(ans));
-		})						
+	res.render('views/profile.html');					
 });
 
 app.post('/setdata',function(req,res){
