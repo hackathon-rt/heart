@@ -171,7 +171,7 @@ app.get('/getdata',function(req,res){
 		var query;
 		dbConnect.queryDB(`SELECT * FROM partners WHERE users_id = '`+req.session.users_id+`' AND partners_type = 2`)
 			.then(result => {
-				if(result.rows.length){
+				if(!result.rows.length){
 					query=`SELECT * FROM TASKS t
 							LEFT JOIN partners p ON p.partners_id = t.owner_id
 							WHERE p.partners_id = (SELECT partners.partners_id FROM partners
