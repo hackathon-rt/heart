@@ -168,7 +168,7 @@ app.post('/profie',function(req,res){
 		})	 */					
 });
 
-app.get('/profie',function(req,res){
+app.get('/profile',function(req,res){
 	res.render('views/profile.html');					
 });
 
