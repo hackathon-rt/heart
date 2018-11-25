@@ -14,7 +14,6 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark main-navbar m-0 p-0">
-        <img src="img/like2.png" alt="Ключ к сердцу">
         <p class="navbar-brand m-0 mr-auto"></p>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -70,12 +69,9 @@
 
                     <button type="submit" id="btnSaveProfile" class="btn btn-primary">Сохранить</button>
                 </form>
-
             </div>
         </div>
     </div>
-
-
 
     <script>
 		$( document ).ready(function() {
@@ -83,12 +79,11 @@
 				act:'getprofile'
 			}, function(data) {				
 				data=JSON.parse(data);
-				console.log(data.body);
-				$('#lastname').val(data.body.lastname),
-				$('#firstname').val(data.body.firstname),
-				$('#inputEmail4').val(data.body.inputEmail4),
-				$('#address').val(data.body.address),
-				$('#cellphone').val(data.body.cellphone)
+				$('#lastname').val(data.body.lastname);
+				$('#firstname').val(data.body.firstname);
+				$('#inputEmail4').val(data.body.email);
+				$('#inputAddress').val(data.body.address);
+				$('#cellphone').val(data.body.cellphone);
 			});			
 		});
         $('#btnSaveProfile').click(function () {
@@ -96,7 +91,7 @@
 				lastname:$('#lastname').val(),
 				firstname:$('#firstname').val(),
 				email:$('#inputEmail4').val(),
-				address:$('#address').val(),
+				address:$('#inputAddress').val(),
 				cellphone:$('#cellphone').val()
 			}, function(data) {
 				
