@@ -168,7 +168,7 @@ app.get('/getdata',function(req,res){
 		})				
 	};		
 	if(req.query.act==='gettasks'){
-				if(req.session.username='14114796'){
+				if(req.session.username=='14114796'){
 					dbConnect.queryDB('select * from tasks')
 						.then(result => {
 							res.end(JSON.stringify(result.rows));
