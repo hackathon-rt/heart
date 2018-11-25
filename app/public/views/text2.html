@@ -48,6 +48,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Личный кабинет</a>
             </li>
+			<span id="logon_forms" style="right:50px;position:fixed;">
+            
+				<input style="display:inline-block;"   type="text" id="l_username" placeholder="логин">
+			
+			
+				<input style="display:inline-block;"  type="password" id="l_password" placeholder="пароль">
+			
+			
+				<input style="display:inline-block;" type="button" id="l_login" value="Войти" onclick="auth_local();">
+			 
+			 
+				<input style="display:inline-block;"  type="button" id="l_login" value="Войти через ВК" onclick="location.href='/auth/vkontakte'">	               
+            
+			</span>
         </ul>
     </div>
 </nav>
