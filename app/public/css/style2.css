@@ -161,14 +161,15 @@ body {
     position: relative;
     text-align: center;
     font-size: 30px;
-    margin-top: 20px
+    margin-top: 20px;
+    color: #313d46;
 }
 .polosk {
     height: 300px;
     top: 90px;
     margin-left: 10px;
     padding-left:15px;
-    color: #3b3b3b;
+    color: #313d46;
     font-size: 14px;
     border-left: 5px solid rgba(114, 132, 142, 0.62);
     margin-bottom: 50px;
