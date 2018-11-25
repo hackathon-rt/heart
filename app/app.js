@@ -168,18 +168,29 @@ app.get('/getdata',function(req,res){
 		})				
 	};		
 	if(req.query.act==='gettasks'){
-
-/* SELECT c.* 
-FROM contacts c
-LEFT JOIN partners_contacts pc ON pc.contacts_id = c.contacts_id
-LEFT JOIN partners p ON p.partners_id ON pc.partners_id
-WHERE p.users_id = $userId	 */
-		
-		
-		dbConnect.queryDB(`select * from tasks`)
+		var query;
+		dbConnect.queryDB(`SELECT * FROM partners WHERE users_id = '`+req.session.users_id+`' AND partners_type = 2`)
 			.then(result => {
-				res.end(JSON.stringify(result.rows));
-		})				
+				if(result.rows.length){
+					query=`SELECT * FROM TASKS t
+							LEFT JOIN partners p ON p.partners_id = t.owner_id
+							WHERE p.partners_id = (SELECT partners.partners_id FROM partners
+							WHERE users_id = '`+req.session.users_id+`' AND partners_type = 2)	`;
+					dbConnect.queryDB(query)
+						.then(result => {
+							res.end(JSON.stringify(result.rows));
+					})						
+				}else{
+					query=`SELECT * FROM TASKS t
+							LEFT JOIN partners p ON p.partners_id = t.owner_id
+							WHERE p.partners_id = (SELECT partners.partners_id FROM partners
+							WHERE users_id = '`+req.session.users_id+`' AND partners_type = 1)	`;
+					dbConnect.queryDB(query)
+						.then(result => {
+							res.end(JSON.stringify(result.rows));
+					})						
+				};
+		})						
 	};		
 });
 
